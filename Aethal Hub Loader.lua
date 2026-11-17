@@ -76,6 +76,18 @@ local BB_UNIVERSES = {
 }
 
 -- Murder Mystery 2 (universe ID covers every place in the game)
+-- Blox Fruits (Sea 1 / Sea 2 / Sea 3 places + the game-wide universe)
+local BF_IDS = {
+    [2753915549]      = true,
+    [4442272183]      = true,
+    [7449423635]      = true,
+    [79091703265657]  = true,
+    [100117331123089] = true,
+}
+local BF_UNIVERSES = {
+    [994732206] = true,
+}
+
 local MM2_UNIVERSES = {
     [66654135] = true,
 }
@@ -87,6 +99,7 @@ local isArcade = ARCADE_IDS[game.PlaceId] == true
 local isPractical = PRACTICAL_IDS[game.PlaceId] == true or PRACTICAL_UNIVERSES[game.GameId] == true
 local isBL     = BL_IDS[game.PlaceId] == true
 local isMM2    = MM2_UNIVERSES[game.GameId] == true
+local isBF     = BF_IDS[game.PlaceId] == true or BF_UNIVERSES[game.GameId] == true
 
 -- ============================================================
 -- SHARED THEME
@@ -16423,7 +16436,7 @@ end
     if not mmOk then
         pcall(function() _print("[Aethel Hub] Murder Mystery 2 failed to load:", mmErr) end)
     end
-elseif ({[2753915549]=true,[4442272183]=true,[7449423635]=true,[79091703265657]=true,[100117331123089]=true})[game.PlaceId] or ({[994732206]=true})[game.GameId] then
+elseif isBF then
     -- ========================================================
     -- BRANCH: BLOX FRUITS (Sea 1 / Sea 2 / Sea 3)
     -- Module based on "Project Lumi" by Darling (open source), rebranded for Aethel Hub.
@@ -43191,5 +43204,5 @@ else
     -- Unsupported place: copy its PlaceId so it can be added to a whitelist above.
     local info = "PlaceId: " .. tostring(game.PlaceId) .. " | UniverseId: " .. tostring(game.GameId)
     pcall(function() setclipboard(info) end)
-    pcall(function() _print("[Aethel Hub] Unsupported place. Copied to clipboard:", info) end)
+    pcall(function() _print("[Aethel Hub build bf-2026-11-17] Unsupported place. Copied to clipboard:", info) end)
 end
